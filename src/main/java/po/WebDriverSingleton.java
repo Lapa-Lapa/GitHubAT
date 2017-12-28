@@ -31,7 +31,7 @@ public class WebDriverSingleton {
         Logger.info("Still managing chromedriver...");
         driver.manage().timeouts().setScriptTimeout(35, TimeUnit.SECONDS);
         Logger.info("Still managing chromedriver...");
-        //driver.manage().window().maximize();
+        driver.manage().window().maximize();
         Logger.info("WebDriver was init");
         return driver;
     }
