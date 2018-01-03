@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class WebDriverSingleton {
 
     private static WebDriver instance;
+    private static int TIME = 7;
 
     private WebDriverSingleton() {
     }
@@ -25,11 +26,11 @@ public class WebDriverSingleton {
         WebDriver driver = new ChromeDriver();
         Logger.info("Chromedriver.exe was found in  was src/main/resources");
         Logger.info("Starting to managing chromedriver...");
-        driver.manage().timeouts().pageLoadTimeout(35, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(TIME, TimeUnit.SECONDS);
         Logger.info("Still managing chromedriver...");
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(TIME, TimeUnit.SECONDS);
         Logger.info("Still managing chromedriver...");
-        driver.manage().timeouts().setScriptTimeout(35, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(TIME, TimeUnit.SECONDS);
         Logger.info("Make browser fullscreen:");
         driver.manage().window().maximize();
         Logger.info("Done!");

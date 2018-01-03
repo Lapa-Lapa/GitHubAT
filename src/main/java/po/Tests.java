@@ -11,13 +11,30 @@ import org.testng.annotations.Test;
 public class Tests {
     private String ITEM = "Iphone SE";
 
-    @Test(description = "https://jira.lgi.io/browse/ONEMT-1 \"Search For ...\"", priority = 0)
+    @Test(description = "https://jira.lgi.io/browse/ONEMT-010 \"Search for ...\"", priority = 0)
     @Feature("PA-15: Search")
     @Story("https://jira.lgi.io/browse/ONEMUI-1 \"Implement search functionality\"")
     @Severity(SeverityLevel.BLOCKER)
     public void searchTest() {
         StartPage startPage = new StartPage();
-        Assert.assertEquals(startPage.open().searchForText(ITEM).getFirstSearchResultPrice(ITEM), "$309.95");
+        Assert.assertEquals(startPage.open().searchForText(ITEM).getFirstSearchResultPrice(ITEM), "$329.95");
+    }
+    @Test(description = "https://jira.lgi.io/browse/ONEMT-020 \"Trending deals on page ...\"", priority = 0)
+    public void departmentsDropDownListTest() {
+        StartPage startPage = new StartPage();
+        startPage.open().clickDepartmentsDropDownList();
+        //Assert.assertEquals();
+    }
+    @Test(description = "https://jira.lgi.io/browse/ONEMT-020 \"Trending deals on page ...\"", priority = 0)
+    public void allDropDownListTest() {
+        StartPage startPage = new StartPage();
+        startPage.open().clickAllDropDownList();
+        //Assert.assertEquals();
+    }
+    @Test(description = "https://jira.lgi.io/browse/ONEMT-020 \"Trending deals on page ...\"", priority = 0)
+    public void trendingDealsTest() {
+        StartPage startPage = new StartPage();
+        Assert.assertEquals(startPage.open().getNumberOfTrengingDeals(), 15);
     }
 
 //    @Test(description = "null", priority = 0)

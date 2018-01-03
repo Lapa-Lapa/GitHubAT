@@ -2,3 +2,4 @@
 /.idea/**
 /test-output/**
 *.iml
+.allure
