@@ -30,8 +30,9 @@ public class WebDriverSingleton {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         Logger.info("Still managing chromedriver...");
         driver.manage().timeouts().setScriptTimeout(35, TimeUnit.SECONDS);
-        Logger.info("Still managing chromedriver...");
+        Logger.info("Make browser fullscreen:");
         driver.manage().window().maximize();
+        Logger.info("Done!");
         Logger.info("WebDriver was init");
         return driver;
     }
