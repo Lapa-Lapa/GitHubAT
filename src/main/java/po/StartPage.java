@@ -8,6 +8,55 @@ import java.util.List;
 
 public class StartPage extends AbstractPage {
 
+//    Types of Locators in Selenium:
+//                          http://oss.infoscience.co.jp/seleniumhq/docs/book/Selenium_Documentation.pdf
+//    1.ID                  WebElement locator_id = driver.findElement(By.id("email"));
+//    2.Name                WebElement locator_name = driver.findElement(By.name("email_id"));
+//      Name using filters  name=name_of_the_element filter=value_of_filter
+//                          name=tripType value=roundtrip
+//    3.Link Text           WebElement locator_linkText = driver.findElement(By.linkText("Create a Page"));
+//    4.Partial Link Text   WebElement locator_PartialLinkText= driver.findElement(By.PartialLinkText("Create a "));
+//    5.Tag Name            Select select = new Select(driver.findElement(By.tagName("DropDown"));
+//                          select.selectByVisibleText("AUG");
+//    6.Class Name          WebElement locator_class =driver.findElement(By.className(“input-xlarge”));
+//    7.CSS Selector        Much faster than XPath
+//                          WebElement firstNavItem = driver.findElement(By.cssSelector("#navigation li:first-child"));
+//                          <li class="nav__item">
+//                          <a href="https://www.gotspoilers.com/home" class="nav__link">Home</a>
+//                          </li>
+//                          <li class="nav__item">
+//                          <a href="https://www.gotspoilers.com/blog" class="nav__link">Blog</a>
+//                          </li>
+//                          WebElement locator_class =driver.findElement(By.cssSelector(“input[type=text]”));
+//                          <div id=“header”>
+//                          <ul class=“header__nav nav”>
+//                          <li class="nav__item"><a href=“#”>Home</a></li>
+//                          <li class="nav__item"><a href=“#”>Blog</a></li>
+//                          </ul>
+//                          </div>
+//                          WebElement navItemHome = driver.findElement(By.cssSelector("#header .navigation li:first-child"));
+//                          https://saucelabs.com/resources/articles/selenium-tips-css-selectors
+//                          https://videoportal.epam.com/video/BR0r33al
+//      Tag and ID          findElement(By.cssSelector(tag#id))
+//      Tag and class       findElement(By.cssSelector(tag.class))
+//      Tag and attribute   findElement(By.cssSelector(tag[attribute=value]))
+//                          findElement(By.cssSelector(input[name=lastName]))
+//      Tag, class, and attribute   findElement(By.cssSelector(tag.class[attribute=value]))
+//      Inner text          findElement(By.cssSelector(font:contains("Password:"))
+//                          css=div:contains("Click here")
+//                          driver.findElement(By.cssSelector("button:contains('Run Query')"));
+//                          driver.findElement(By.cssSelector("css=.gwt-Button:contains('Run Query')"))
+//    8.XPath               WebElement locator_xpath = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[4]/td/div/div[3]/table/tbody/tr[1]/td/a"));
+//      Native Xpath
+//      Relative Xpath      String firstNavItem = “//ul[@id=”navigation”]/*[1]”;
+//                          browser.findElement(By.xpath(firstNavItem));
+//                          <ul id=“navigation-4815162342” class=“nav”>
+//                          <!-- list items -->
+//                          </ul>
+//                          WebElement navigation = browser.findElement(By.xpath(“//ul[contains(@id, ‘navigation’)]”));
+//    9.DOM                 var navItems = document.getElementsByClassName(“nav__item”)[0];
+//      Preferred selector order : id > name > css > xpath
+
     private static final String URL = "https://www.amazon.com/";
     private static final By SEARCH_FIELD = By.cssSelector("#twotabsearchtextbox");//1
     private static final By SEARCH_GO_BUTTON = By.xpath("//input[@value='Go']");//2
