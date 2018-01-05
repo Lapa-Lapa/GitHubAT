@@ -1,6 +1,7 @@
 package po;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import po.utils.Logger;
 
@@ -64,11 +65,12 @@ public class StartPage extends AbstractPage {
     private static final By FIRST_SEARCH_RESULT_PRICE = By.cssSelector("#priceblock_ourprice");
     private static final By DEPARTMENTS_DROP_DOWN_LIST = By.id("nav-link-shopall");//Identifier (ID) locators
     private static final By ALL_DROP_DOWN_LIST = By.linkText("url");//Name locators
+    //private static final By TRENDING_DEALS_AREA = By.id("deals-shoveler-ns_X4QD13DXBTJVE424B34Z_3215_");
     private static final By TRENDING_DEALS_AREA = By.xpath("//ul[@class='a-unordered-list a-nostyle a-horizontal feed-carousel-shelf']");
     //private static final By TRENDING_DEALS_EACH_ITEM = By.xpath("//div[@class='dealPrice']/span"); return price for first
     private static final By TRENDING_DEALS_EACH_ITEM = By.xpath("//div[@class='dealPrice']");
     //WebElement TRENDING_DEALS_INFO_INSIDE_FIRST_ITEM = driver.findElement(By.className("feed-carousel-card")).findElement(By.tagName("span"));
-    List<WebElement> ALL_TREANDING_DEALS=driver.findElements(By.xpath("//div[@class='dealPrice']"));//5 в теории, пока не работает
+    List<WebElement> ALL_TREANDING_DEALS = driver.findElements(By.xpath("//div[@class='dealPrice']"));//5 в теории, пока не работает
 
     //private static final By LOGOIN = By.xpath("//a[contains(text(),'Текст')]");
     //*[@id="login_field"]
@@ -98,16 +100,29 @@ public class StartPage extends AbstractPage {
         Logger.info(TEXT + " price is: " + price);
         return price;
     }
+
     public StartPage clickDepartmentsDropDownList() {
         driver.findElement(DEPARTMENTS_DROP_DOWN_LIST).click();
         return new StartPage();
     }
+
     public StartPage clickAllDropDownList() {
         driver.findElement(ALL_DROP_DOWN_LIST).click();
         return new StartPage();
     }
 
     public int getNumberOfTrengingDeals() {
+        if (!isElementVisible(TRENDING_DEALS_AREA)) {
+            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,300)", "");
+        }
+        try {
+            Thread.sleep(50000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", TRENDING_DEALS_AREA);
+//        JavascriptExecutor jse = (JavascriptExecutor) driver;
+//        jse.executeScript("window.scrollBy(0,pageYOffset)", "");
         Logger.info("Number of trenging deals is: " + driver.findElement(TRENDING_DEALS_EACH_ITEM).getText());
         Logger.info("Number of trenging deals is: " + driver.findElement(TRENDING_DEALS_AREA).findElement(TRENDING_DEALS_EACH_ITEM).getText());
         Logger.info("Number of trenging deals is: " + ALL_TREANDING_DEALS.size());
@@ -115,7 +130,6 @@ public class StartPage extends AbstractPage {
         Logger.info("Number of trenging deals is: " + ALL_TREANDING_DEALS.size());
         return NUMBER_OF_TRENDING_DEALS;
     }
-
 
 
 //    public StartPage login(String USERNAME, String PASSWORD) {
