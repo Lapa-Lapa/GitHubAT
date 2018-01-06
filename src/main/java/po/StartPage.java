@@ -3,8 +3,10 @@ package po;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import po.utils.Highliter;
 import po.utils.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StartPage extends AbstractPage {
@@ -65,18 +67,13 @@ public class StartPage extends AbstractPage {
     private static final By FIRST_SEARCH_RESULT_PRICE = By.cssSelector("#priceblock_ourprice");
     private static final By DEPARTMENTS_DROP_DOWN_LIST = By.id("nav-link-shopall");//Identifier (ID) locators
     private static final By ALL_DROP_DOWN_LIST = By.linkText("url");//Name locators
-    //private static final By TRENDING_DEALS_AREA = By.id("deals-shoveler-ns_X4QD13DXBTJVE424B34Z_3215_");
-    private static final By TRENDING_DEALS_AREA = By.xpath("//ul[@class='a-unordered-list a-nostyle a-horizontal feed-carousel-shelf']");
-    //private static final By TRENDING_DEALS_EACH_ITEM = By.xpath("//div[@class='dealPrice']/span"); return price for first
-    private static final By TRENDING_DEALS_EACH_ITEM = By.xpath("//div[@class='dealPrice']");
-    //WebElement TRENDING_DEALS_INFO_INSIDE_FIRST_ITEM = driver.findElement(By.className("feed-carousel-card")).findElement(By.tagName("span"));
-    List<WebElement> ALL_TREANDING_DEALS = driver.findElements(By.xpath("//div[@class='dealPrice']"));//5 в теории, пока не работает
+    private static final By TRENDING_DEALS_AREA = By.xpath("//div[@class='a-section a-spacing-none shogun-widget deals-shoveler aui-desktop fresh-shoveler']");
 
-    //private static final By LOGOIN = By.xpath("//a[contains(text(),'Текст')]");
-    //*[@id="login_field"]
-    //
+    //private static final By TRENDING_DEALS_EACH_ITEM = By.xpath("//div[@class='dealPrice']/*");
+    //WebElement TRENDING_DEALS_INFO_INSIDE_FIRST_ITEM = driver.findElement(By.className("feed-carousel-card")).findElement(By.tagName("span"));
+
+
     //private static final By CORRECT_PASSWORD = By.xpath("//ul[@class='HeaderNavlink name']/li[2]");
-    ////*[@id="password"]
     //private static final By Z = By.xpath("//iframe[contains(@sandbox,'allow-top-navigation')]");
     //private static final By LOGINBUTTON = By.xpath("//*[@type='submit']");
     //private static final By LOGINBUTTON = By.xpath("//*[@class='btn btn-primary btn-block']");
@@ -112,22 +109,25 @@ public class StartPage extends AbstractPage {
     }
 
     public int getNumberOfTrengingDeals() {
-        if (!isElementVisible(TRENDING_DEALS_AREA)) {
-            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,300)", "");
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,450)", "");
+        Highliter.highlightElementON(TRENDING_DEALS_AREA, driver);
+        Highliter.highlightElementOFF(TRENDING_DEALS_AREA, driver);
+        List<WebElement> ALL_TREANDING_DEALS = new ArrayList<WebElement>();
+        for (int i = 1; i < 100; i++) {
+            By TRENDING_DEALS_EACH_ITEM = By.xpath("//div[@class='a-section a-spacing-none shogun-widget deals-shoveler aui-desktop fresh-shoveler']/div[2]/div/ul/li[" + i + "]");
+            Logger.info("Trying to locate " + i + " element.");
+            try {
+                Highliter.highlightElementON(TRENDING_DEALS_EACH_ITEM, driver);
+                Highliter.highlightElementOFF(TRENDING_DEALS_EACH_ITEM, driver);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Logger.info(i + " Element do not exist.");
+                break;
+            }
+            ALL_TREANDING_DEALS.add(driver.findElement(TRENDING_DEALS_EACH_ITEM));
         }
-        try {
-            Thread.sleep(50000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", TRENDING_DEALS_AREA);
-//        JavascriptExecutor jse = (JavascriptExecutor) driver;
-//        jse.executeScript("window.scrollBy(0,pageYOffset)", "");
-        Logger.info("Number of trenging deals is: " + driver.findElement(TRENDING_DEALS_EACH_ITEM).getText());
-        Logger.info("Number of trenging deals is: " + driver.findElement(TRENDING_DEALS_AREA).findElement(TRENDING_DEALS_EACH_ITEM).getText());
-        Logger.info("Number of trenging deals is: " + ALL_TREANDING_DEALS.size());
         int NUMBER_OF_TRENDING_DEALS = ALL_TREANDING_DEALS.size();
-        Logger.info("Number of trenging deals is: " + ALL_TREANDING_DEALS.size());
+        Logger.info("Number of all trenging deals is: " + ALL_TREANDING_DEALS.size());
         return NUMBER_OF_TRENDING_DEALS;
     }
 
