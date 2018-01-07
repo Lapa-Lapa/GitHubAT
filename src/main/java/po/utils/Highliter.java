@@ -9,7 +9,7 @@ public class Highliter {
     public static void highlightElementON(By locator, WebDriver driver) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='3px solid green'", driver.findElement(locator));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

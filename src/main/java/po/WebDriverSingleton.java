@@ -1,8 +1,12 @@
 package po;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import po.utils.Logger;
 
 import java.util.concurrent.TimeUnit;
@@ -11,6 +15,8 @@ public class WebDriverSingleton {
 
     private static WebDriver instance;
     private static int TIME = 15;
+    private static int WIDTH = 1040;
+    private static int HEIGHT = 820;
 
     private WebDriverSingleton() {
     }
@@ -29,14 +35,17 @@ public class WebDriverSingleton {
         Logger.info("Starting to managing chromedriver...");
         driver.manage().timeouts().pageLoadTimeout(TIME, TimeUnit.SECONDS);
         Logger.info("Still managing chromedriver...");
+        //  *   *   *   *   *   Implicit wait   *   *   *   *   *
         driver.manage().timeouts().implicitlyWait(TIME, TimeUnit.SECONDS);
         Logger.info("Still managing chromedriver...");
+        //  *   *   *   *   *       End         *   *   *   *   *
         driver.manage().timeouts().setScriptTimeout(TIME, TimeUnit.SECONDS);
-        Logger.info("Make browser fullscreen:");
-        //driver.manage().window().maximize();
-        //driver.manage().window().setSize(new Dimension(1920, 1080));//(Full High Definition)
-        //driver.manage().window().setSize(new Dimension(1280, 720));//(HD Ready)
-        driver.manage().window().setSize(new Dimension(1040, 820));//(Custom resolution)
+        Logger.info("Making browser window resolution: ");
+        //driver.manage().window().maximize();Logger.info("Fullscreen");
+        //driver.manage().window().setSize(new Dimension(1920, 1080));Logger.info("Full HD");
+        //driver.manage().window().setSize(new Dimension(1280, 720));Logger.info("HD");
+        driver.manage().window().setSize(new Dimension(WIDTH, HEIGHT));
+        Logger.info("Custom: " + WIDTH + "*" + HEIGHT);
         Logger.info("Done!");
         Logger.info("WebDriver was init");
         return driver;

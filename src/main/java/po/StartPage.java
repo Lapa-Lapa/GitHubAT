@@ -3,6 +3,7 @@ package po;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import po.utils.Highliter;
 import po.utils.Logger;
 
@@ -61,9 +62,11 @@ public class StartPage extends AbstractPage {
 //      Preferred selector order : id > name > css > xpath
 
     private static final String URL = "https://www.amazon.com/";
-    private static final By SEARCH_FIELD = By.cssSelector("#twotabsearchtextbox");//1
-    private static final By SEARCH_GO_BUTTON = By.xpath("//input[@value='Go']");//2
-    private static final By FIRST_SEARCH_RESULT = By.cssSelector("#result_0 a.s-access-detail-page");
+    private static final By SEARCH_FIELD = By.cssSelector("#twotabsearchtextbox");
+    private static final By SEARCH_GO_BUTTON = By.xpath("//input[@value='Go']");
+    private static final By FIRST_SEARCH_RESULT_SPONSORED = By.cssSelector("#result_0 a.s-access-detail-page");
+    private static final By FIRST_SEARCH_RESULT_NOT_SPONSORED = By.cssSelector("#result_3 a.s-access-detail-page>span.a-color-secondary>span");
+    private static final By SORT_OPTIONS_ALL = By.xpath("//select[@id='sort']");
     private static final By FIRST_SEARCH_RESULT_PRICE = By.cssSelector("#priceblock_ourprice");
     private static final By DEPARTMENTS_DROP_DOWN_LIST = By.id("nav-link-shopall");//Identifier (ID) locators
     private static final By ALL_DROP_DOWN_LIST = By.linkText("url");//Name locators
@@ -91,9 +94,18 @@ public class StartPage extends AbstractPage {
         return new StartPage();
     }
 
+    public StartPage sortFor(String KIND_OF_SORT) {
+        WebElement dropdown = driver.findElement(SORT_OPTIONS_ALL);
+        Select bank = new Select(dropdown);
+        bank.selectByVisibleText(KIND_OF_SORT);
+        Logger.info("Sorting by: " + KIND_OF_SORT);
+        return new StartPage();
+    }
+
     public String getFirstSearchResultPrice(String TEXT) {
-        driver.findElement(FIRST_SEARCH_RESULT).click();
-        String price = driver.findElement(FIRST_SEARCH_RESULT_PRICE).getText();
+        waitForElementClicable(FIRST_SEARCH_RESULT_NOT_SPONSORED);
+        Highliter.highlightElementON(FIRST_SEARCH_RESULT_NOT_SPONSORED,driver);
+        String price = driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED).getText();
         Logger.info(TEXT + " price is: " + price);
         return price;
     }
@@ -130,6 +142,7 @@ public class StartPage extends AbstractPage {
         Logger.info("Number of all trenging deals is: " + ALL_TREANDING_DEALS.size());
         return NUMBER_OF_TRENDING_DEALS;
     }
+
 
 
 //    public StartPage login(String USERNAME, String PASSWORD) {
