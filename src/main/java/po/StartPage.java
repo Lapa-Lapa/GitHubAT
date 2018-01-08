@@ -64,18 +64,16 @@ public class StartPage extends AbstractPage {
     private static final String URL = "https://www.amazon.com/";
     private static final By SEARCH_FIELD = By.cssSelector("#twotabsearchtextbox");
     private static final By SEARCH_GO_BUTTON = By.xpath("//input[@value='Go']");
-    private static final By FIRST_SEARCH_RESULT_SPONSORED = By.cssSelector("#result_0 a.s-access-detail-page");
-    private static final By FIRST_SEARCH_RESULT_NOT_SPONSORED = By.cssSelector("#result_3 a.s-access-detail-page>span.a-color-secondary>span");
+    private static final By FIRST_SEARCH_RESULT_NOT_SPONSORED = By.cssSelector("#result_3");
+    private static final By FIRST_SEARCH_RESULT_NOT_SPONSORED_LINK_TO_DP = By.cssSelector("#result_3 a.s-access-detail-page");
     private static final By SORT_OPTIONS_ALL = By.xpath("//select[@id='sort']");
     private static final By FIRST_SEARCH_RESULT_PRICE = By.cssSelector("#priceblock_ourprice");
-    private static final By DEPARTMENTS_DROP_DOWN_LIST = By.id("nav-link-shopall");//Identifier (ID) locators
+    private static final By DEPARTMENTS_DROP_DOWN_LIST = By.id("nav-link-shopall");
     private static final By ALL_DROP_DOWN_LIST = By.linkText("url");//Name locators
     private static final By TRENDING_DEALS_AREA = By.xpath("//div[@class='a-section a-spacing-none shogun-widget deals-shoveler aui-desktop fresh-shoveler']");
 
     //private static final By TRENDING_DEALS_EACH_ITEM = By.xpath("//div[@class='dealPrice']/*");
     //WebElement TRENDING_DEALS_INFO_INSIDE_FIRST_ITEM = driver.findElement(By.className("feed-carousel-card")).findElement(By.tagName("span"));
-
-
     //private static final By CORRECT_PASSWORD = By.xpath("//ul[@class='HeaderNavlink name']/li[2]");
     //private static final By Z = By.xpath("//iframe[contains(@sandbox,'allow-top-navigation')]");
     //private static final By LOGINBUTTON = By.xpath("//*[@type='submit']");
@@ -93,6 +91,12 @@ public class StartPage extends AbstractPage {
         Logger.info("Search for: " + TEXT + " initiated");
         return new StartPage();
     }
+    public Iphone_SE_Page searchForText_1(String TEXT) {
+        driver.findElement(SEARCH_FIELD).sendKeys(TEXT);
+        driver.findElement(SEARCH_GO_BUTTON).click();
+        Logger.info("Search for: " + TEXT + " initiated");
+        return new Iphone_SE_Page();
+    }
 
     public StartPage sortFor(String KIND_OF_SORT) {
         WebElement dropdown = driver.findElement(SORT_OPTIONS_ALL);
@@ -102,11 +106,23 @@ public class StartPage extends AbstractPage {
         return new StartPage();
     }
 
-    public String getFirstSearchResultPrice(String TEXT) {
+    public String getFirstSearchResultPrice() {
         waitForElementClicable(FIRST_SEARCH_RESULT_NOT_SPONSORED);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED));
         Highliter.highlightElementON(FIRST_SEARCH_RESULT_NOT_SPONSORED,driver);
-        String price = driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED).getText();
-        Logger.info(TEXT + " price is: " + price);
+        String all_text = driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED).getText();
+        Logger.info(all_text);
+        String all_text_splitted[] = all_text.split("\\$");
+        Logger.info(all_text_splitted[1]);
+        return all_text_splitted[1];
+    }
+    public String getFirstSearchResultRangeOfPrices() {
+        waitForElementClicable(FIRST_SEARCH_RESULT_NOT_SPONSORED);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED));
+        Highliter.highlightElementON(FIRST_SEARCH_RESULT_NOT_SPONSORED,driver);
+        driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED_LINK_TO_DP).click();
+        String price =driver.findElement(FIRST_SEARCH_RESULT_PRICE).getText();
+        Logger.info(price);
         return price;
     }
 
