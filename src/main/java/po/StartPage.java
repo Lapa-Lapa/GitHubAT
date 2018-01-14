@@ -91,12 +91,6 @@ public class StartPage extends AbstractPage {
         Logger.info("Search for: " + TEXT + " initiated");
         return new StartPage();
     }
-    public Iphone_SE_Page searchForText_1(String TEXT) {
-        driver.findElement(SEARCH_FIELD).sendKeys(TEXT);
-        driver.findElement(SEARCH_GO_BUTTON).click();
-        Logger.info("Search for: " + TEXT + " initiated");
-        return new Iphone_SE_Page();
-    }
 
     public StartPage sortFor(String KIND_OF_SORT) {
         WebElement dropdown = driver.findElement(SORT_OPTIONS_ALL);
@@ -105,24 +99,54 @@ public class StartPage extends AbstractPage {
         Logger.info("Sorting by: " + KIND_OF_SORT);
         return new StartPage();
     }
+    //3in1
+    public StartPage openSearchForTextAndSort(String TEXT,String SHEET_NAME, int INDEX) {
+        open();
+        searchForText(TEXT);
+        String KIND_OF_SORT = WorkWithExcelFiles.loadSortByText(SHEET_NAME,INDEX );
+        sortFor(KIND_OF_SORT);
+        return new StartPage();
+    }
 
-    public String getFirstSearchResultPrice() {
+    public Iphone_SE_Page searchForText_1(String TEXT) {
+        driver.findElement(SEARCH_FIELD).sendKeys(TEXT);
+        driver.findElement(SEARCH_GO_BUTTON).click();
+        Logger.info("Search for: " + TEXT + " initiated");
+        return new Iphone_SE_Page();
+    }
+
+
+    public String getFirstSearchResultPrice(String SHEET_NAME, int INDEX) {
         waitForElementClicable(FIRST_SEARCH_RESULT_NOT_SPONSORED);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED));
-        Highliter.highlightElementON(FIRST_SEARCH_RESULT_NOT_SPONSORED,driver);
+        Highliter.highlightElementON(FIRST_SEARCH_RESULT_NOT_SPONSORED, driver);
         String all_text = driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED).getText();
         Logger.info(all_text);
         String all_text_splitted[] = all_text.split("\\$");
         Logger.info(all_text_splitted[1]);
+        WorkWithExcelFiles.loadInExcel(SHEET_NAME, INDEX, all_text_splitted[1]);
+
         return all_text_splitted[1];
     }
-    public String getFirstSearchResultRangeOfPrices() {
+
+    public String getFirstSearchResultRangeOfPricesDefault() {
         waitForElementClicable(FIRST_SEARCH_RESULT_NOT_SPONSORED);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED));
-        Highliter.highlightElementON(FIRST_SEARCH_RESULT_NOT_SPONSORED,driver);
+        Highliter.highlightElementON(FIRST_SEARCH_RESULT_NOT_SPONSORED, driver);
         driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED_LINK_TO_DP).click();
-        String price =driver.findElement(FIRST_SEARCH_RESULT_PRICE).getText();
+        String price = driver.findElement(FIRST_SEARCH_RESULT_PRICE).getText();
         Logger.info(price);
+        return price;
+    }
+
+    public String getFirstSearchResultRangeOfPrices(String SHEET_NAME, int INDEX) {
+        waitForElementClicable(FIRST_SEARCH_RESULT_NOT_SPONSORED);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED));
+        Highliter.highlightElementON(FIRST_SEARCH_RESULT_NOT_SPONSORED, driver);
+        driver.findElement(FIRST_SEARCH_RESULT_NOT_SPONSORED_LINK_TO_DP).click();
+        String price = driver.findElement(FIRST_SEARCH_RESULT_PRICE).getText();
+        Logger.info(price);
+        WorkWithExcelFiles.loadInExcel(SHEET_NAME, INDEX, price);
         return price;
     }
 
@@ -158,7 +182,6 @@ public class StartPage extends AbstractPage {
         Logger.info("Number of all trenging deals is: " + ALL_TREANDING_DEALS.size());
         return NUMBER_OF_TRENDING_DEALS;
     }
-
 
 
 //    public StartPage login(String USERNAME, String PASSWORD) {
