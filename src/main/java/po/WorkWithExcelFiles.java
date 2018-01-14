@@ -15,7 +15,6 @@ public class WorkWithExcelFiles {
     private static String TEST_DATA = "src/main/resources/TestData.xlsx";
     private static String TEST_OUT_PUT = "src/main/resources/TestOutPut.xlsx";
 
-    //https://tproger.ru/translations/how-to-read-write-excel-file-java-poi-example/
     public static String loadSortByText(String SHEET, int INDEX) {
         XSSFWorkbook testData = null;
         testData = getDataFrom(TEST_DATA, testData);
@@ -35,7 +34,7 @@ public class WorkWithExcelFiles {
         XSSFRow row = wb.getSheet(SHEET).getRow(INDEX);
         Logger.info("Row number " + (INDEX + 1) + " exist on " + SHEET);
         XSSFCell cell = row.createCell(row.getLastCellNum());
-        cell.setCellValue( PRICE_FROM_SITE);
+        cell.setCellValue(PRICE_FROM_SITE);
         FileOutputStream fileOut = null;
         fileOut = getFileOutInstance(fileOut);
         try {
@@ -80,6 +79,9 @@ public class WorkWithExcelFiles {
 }
 /**
  * Found here: https://gist.github.com/madan712/3912272
+ * and here:
+ * https://tproger.ru/translations/how-to-read-write-excel-file-java-poi-example/
+ * WorkBook.close(), FileOutputStream and FileInputStream is very necessary!
  */
 // import java.io.FileInputStream;
 //         import java.io.FileOutputStream;
