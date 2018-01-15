@@ -23,8 +23,6 @@ public class Tests {
         String ITEM = "Iphone SE";
         Assert.assertEquals(startPage.open().searchForText_1(ITEM).getFirstSearchResultRangeOfPrices(), "$329.95");
     }
-
-
     //  *   *   *   *   *   PA-1: Search    *   *   *   *   *   END     *   *   *
     //  *   *   *   *   *   PA-1: TrendingDealsArea *   *   *   START   *   *   *
 
@@ -45,6 +43,7 @@ public class Tests {
     //  *   *   *   *   *   PA-2: Sorting   *   *   *   *   *   START   *   *   *
     String ITEM = "dr martens 1460 women";
     String SHEET_NAME = "SortBy";
+
     /**
      * Types of Sorting (KIND_OF_SORT): (0)
      * Default:Relevance (1)
@@ -63,7 +62,7 @@ public class Tests {
         String ITEM = "dr martens 1460 women";
         Assert.assertEquals(startPage.open().searchForText(ITEM)
                         .getFirstSearchResultRangeOfPricesDefault(),
-                startPage.openSearchForTextAndSort(ITEM, SHEET_NAME,INDEX)
+                startPage.openSearchForTextAndSort(ITEM, SHEET_NAME, INDEX)
                         .getFirstSearchResultRangeOfPrices(SHEET_NAME, INDEX));
     }
 
@@ -75,7 +74,7 @@ public class Tests {
         int INDEX = 2;
         StartPage startPage = new StartPage();
         Assert.assertEquals(startPage
-                .openSearchForTextAndSort(ITEM, SHEET_NAME,INDEX)
+                .openSearchForTextAndSort(ITEM, SHEET_NAME, INDEX)
                 .getFirstSearchResultRangeOfPrices(SHEET_NAME, INDEX), "$92.00 - $252.75");
     }
 
@@ -87,7 +86,7 @@ public class Tests {
         int INDEX = 3;
         StartPage startPage = new StartPage();
         Assert.assertEquals(startPage
-                .openSearchForTextAndSort(ITEM, SHEET_NAME,INDEX)
+                .openSearchForTextAndSort(ITEM, SHEET_NAME, INDEX)
                 .getFirstSearchResultPrice(SHEET_NAME, INDEX), "658.63");
     }
 
@@ -99,7 +98,7 @@ public class Tests {
         int INDEX = 4;
         StartPage startPage = new StartPage();
         Assert.assertEquals(startPage
-                .openSearchForTextAndSort(ITEM, SHEET_NAME,INDEX)
+                .openSearchForTextAndSort(ITEM, SHEET_NAME, INDEX)
                 .getFirstSearchResultRangeOfPrices(SHEET_NAME, INDEX), "$85.99 - $155.00");
     }
 
@@ -111,13 +110,14 @@ public class Tests {
         int INDEX = 5;
         StartPage startPage = new StartPage();
         Assert.assertEquals(startPage
-                .openSearchForTextAndSort(ITEM, SHEET_NAME,INDEX)
+                .openSearchForTextAndSort(ITEM, SHEET_NAME, INDEX)
                 .getFirstSearchResultPrice(SHEET_NAME, INDEX), " 164 99");
     }
-
     //  *   *   *   *   *   PA-2: Sorting   *   *   *   *   *   END   *   *   *
 
-
+    /**
+     *
+     */
     @Test(description = "https://jira.lgi.io/browse/ONEMT-020 \"Trending deals on page ...\"", priority = 999)
     public void departmentsDropDownListTest() {
         StartPage startPage = new StartPage();
@@ -131,7 +131,6 @@ public class Tests {
         startPage.open().clickAllDropDownList();
         //Assert.assertEquals();
     }
-
 
     //    @Test(description = "null", priority = 0)
 //    public void testNotValidPassword() {

@@ -1,5 +1,23 @@
-/target/**
+# My
+allure-results
+
+# From: https://github.com/vitalliuss/automation-samples/blob/master/.gitignore
+
+# Java files
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+target
+test-output
+
+# Eclipse
+.classpath
+.project
+.settings
+
+#IDEA
 .idea
-/test-output/**
 *.iml
-/allure-results/**
