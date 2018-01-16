@@ -21,7 +21,11 @@ public class Tests {
     public void searchTest2Words() {
         StartPage startPage = new StartPage();
         String ITEM = "Iphone SE";
-        Assert.assertEquals(startPage.open().searchForText_1(ITEM).getFirstSearchResultRangeOfPrices(), "$329.95");
+        Assert.assertEquals(startPage
+                .open()
+                .searchForText(ITEM)
+                .redirectToIphone_SE_Page()
+                .getFirstSearchResultRangeOfPrices(), "$329.95");
     }
     //  *   *   *   *   *   PA-1: Search    *   *   *   *   *   END     *   *   *
     //  *   *   *   *   *   PA-1: TrendingDealsArea *   *   *   START   *   *   *
@@ -98,8 +102,9 @@ public class Tests {
         int INDEX = 4;
         StartPage startPage = new StartPage();
         Assert.assertEquals(startPage
-                .openSearchForTextAndSort(ITEM, SHEET_NAME, INDEX)
-                .getFirstSearchResultRangeOfPrices(SHEET_NAME, INDEX), "$85.99 - $155.00");
+                        .openSearchForTextAndSort(ITEM, SHEET_NAME, INDEX)
+                        .getFirstSearchResultRangeOfPrices(SHEET_NAME, INDEX),
+                "$85.99 - $155.00");
     }
 
     @Test(description = "https://jira.lgi.io/browse/ONEMT-212 \"Sort for Newest Arrivals (5)\"", priority = 4)
@@ -110,8 +115,9 @@ public class Tests {
         int INDEX = 5;
         StartPage startPage = new StartPage();
         Assert.assertEquals(startPage
-                .openSearchForTextAndSort(ITEM, SHEET_NAME, INDEX)
-                .getFirstSearchResultPrice(SHEET_NAME, INDEX), " 164 99");
+                        .openSearchForTextAndSort(ITEM, SHEET_NAME, INDEX)
+                        .getFirstSearchResultPrice(SHEET_NAME, INDEX),
+                " 164 99");
     }
     //  *   *   *   *   *   PA-2: Sorting   *   *   *   *   *   END   *   *   *
 
